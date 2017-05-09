@@ -1,0 +1,8 @@
+{
+  "fullScreen_b": false,
+  "initScreenSizeWidth_i": 1280,
+  "initScreenSizeHeight_i": 720,
+  "drawFlashLightShadow_b": true,
+  "mouseLookSensitivity_f": 20.0,
+  "keyboardLookSensitivity_f": 20.0
+}

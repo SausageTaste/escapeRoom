@@ -1,0 +1,169 @@
+
+
+initPos(0, 0, 0);
+
+
+bounding::aabb
+{
+    name(bounding);
+    initPos(0, 0, 0);
+    minPos(-100, -100, -100); maxPos(100, 100, 100);
+    weight(0);
+    static(true);
+}
+
+
+light::PointLight
+{
+    name(center_light);
+    static(true);
+    initPos(0, 3, -4);
+    color(0.6, 0.6, 0.6);
+    maxDist(30);
+}
+
+
+object::define
+{
+    name("hallway");
+    static(true);
+    initpos(0, 0, 0);
+
+
+    collider::aabb
+    {
+        name(bounding);
+        initPos(0, 0, 0);
+        type ( bounding, trigger );
+        minPos(-100, -100, -100); maxPos(100, 100, 100);
+        weight(0);
+        static(true);
+        activateOption(once);
+
+        command("gr_set_ambient 0 0 0");
+        command("pl_toggle_flashlight 0");
+        command("pl_set_pos 2.6 0 1.1");
+        command("pl_set_degree 0 25 0");
+    }
+
+
+    renderer::quad
+    {
+        name(floor);
+        initPos(0, 0, 0);
+
+        pos01(-4, 0, -100); pos11(4, 0, -100);
+        pos00(-4, 0, 10); pos10(4, 0, 10);
+
+        texverc(110); texhorc(8);
+        texture(0021.bmp);
+        shininess(128);
+        specstrength(0.5);
+    }
+    collider::aabb
+    {
+        name(floor_col);
+        initPos(0, 0, 0);
+        type ( blocking );
+        minPos(-4, -10, -100); maxPos(4, 0, 10);
+        weight(0);
+        static(true);
+        activateOption(toggle);
+    }
+
+
+    renderer::quad
+    {
+        name(wall_left);
+        initPos(0, 0, 0);
+
+        pos01(-4, 4, 10); pos11(-4, 4, -50);
+        pos00(-4, 0, 10); pos10(-4, 0, -50);
+
+        texverc(4); texhorc(60);
+        texture(0022.bmp);
+        shininess(8);
+        specstrength(0.3);
+    }
+    collider::aabb
+    {
+        name(wall_left_col);
+        initPos(0, 0, 0);
+        type ( blocking );
+        minPos(-5, 0, -50); maxPos(-4, 4, 10);
+        weight(0);
+        static(true);
+        activateOption(toggle);
+    }
+
+
+    renderer::quad
+    {
+        name(wall_right);
+        initPos(0, 0, 0);
+
+        pos01(4, 4, -50); pos11(4, 4, 10);
+        pos00(4, 0, -50); pos10(4, 0, 10);
+
+        texverc(4); texhorc(60);
+        texture(0022.bmp);
+        shininess(8);
+        specstrength(0.3);
+    }
+    collider::aabb
+    {
+        name(wall_right_col);
+        initPos(0, 0, 0);
+        type ( blocking );
+        minPos(4, 0, -50); maxPos(5, 4, 10);
+        weight(0);
+        static(true);
+        activateOption(toggle);
+    }
+
+
+    renderer::quad
+    {
+        name(ceiling);
+        initPos(0, 0, 0);
+
+        pos01(4, 4, -50); pos11(-4, 4, -50);
+        pos00(4, 4, 10); pos10(-4, 4, 10);
+
+        texverc(60); texhorc(8);
+        texture(0012.bmp);
+        shininess(0);
+        specstrength(0);
+    }
+    collider::aabb
+    {
+        name(ceiling_col);
+        initPos(0, 0, 0);
+        type ( blocking );
+        minPos(-4, 4, -50); maxPos(4, 5, 10);
+        weight(0);
+        static(true);
+        activateOption(toggle);
+    }
+}
+
+/*
+object::objstatic
+{
+    name(seoul);
+    initpos(0, 0, 0);
+    static(false);
+    objname(hello_cube);
+
+    collider::aabb
+    {
+        name(seoul_col);
+        initPos(0, 0, 0);
+        type(blocking);
+        minPos(-1, 0, -1); maxPos(1,2,1);
+        weight(0);
+        static(false);
+        activateOption(toggle);
+    }
+}
+*/
