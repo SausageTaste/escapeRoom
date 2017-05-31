@@ -5,11 +5,11 @@ import numpy as np
 
 from uniloc import UniformLocs
 from uniloc_shadow import UniformLocsShadow
-
 from player import Player
 from resource_manager import ResourceManager
 from camera import Camera
 from configs_con import Configs
+
 
 class RenderingDude:
     def __init__(self, player:Player, resourceManager:ResourceManager, camera:Camera, configs:Configs):
@@ -53,10 +53,10 @@ class RenderingDude:
             gl.glUniform1f(self.uniLoc.flashLightCutoff_f, self.player.flashLight.cutoff_f)
 
             if self.configs.drawFlashLightShadow_b:
-                gl.glUniform1i(self.uniLoc.drawFlashLightShadow_i, 1)
-                gl.glUniform1i(self.uniLoc.flashLightShadowMap, 1)
-                gl.glActiveTexture(gl.GL_TEXTURE1)
-                gl.glBindTexture( gl.GL_TEXTURE_2D, self.player.flashLight.depthMapTex )
+                gl.glUniform1i(self.uniLoc.drawFlashLightShadow_i, 1);
+                gl.glUniform1i(self.uniLoc.flashLightShadowMap, 1);
+                gl.glActiveTexture(gl.GL_TEXTURE1);
+                gl.glBindTexture( gl.GL_TEXTURE_2D, self.player.flashLight.depthMapTex );
             else:
                 gl.glUniform1i(self.uniLoc.drawFlashLightShadow_i, 0)
 
@@ -64,17 +64,18 @@ class RenderingDude:
 
     def renderShadow(self, winWidth_i, winHeight_i) -> None:
         if self.player.flashLightOn_b and self.configs.drawFlashLightShadow_b:
-            gl.glUseProgram(self.__programForShadow)
-            self.player.flashLight.startRender()
+            gl.glUseProgram(self.__programForShadow);
+            self.player.flashLight.startRender();
 
             gl.glUniformMatrix4fv(
-                self.uniLocShadow.lightProjectMat, 1, gl.GL_FALSE, self.player.flashLight.getViewMatrix(self.player).dot(self.player.flashLight.getPerspectiveMatrix())
-            )
-            self.resourceMan.renderShadow(self.uniLocShadow)
+                self.uniLocShadow.lightProjectMat, 1, gl.GL_FALSE,
+                self.player.flashLight.getViewMatrix(self.player).dot(self.player.flashLight.getPerspectiveMatrix())
+            );
+            self.resourceMan.renderShadow(self.uniLocShadow);
 
-            self.player.flashLight.endRender()
+            self.player.flashLight.endRender();
 
-            gl.glViewport(0, 0, winWidth_i, winHeight_i)
+            gl.glViewport(0, 0, winWidth_i, winHeight_i);
 
     @staticmethod
     def getProgram() -> int:

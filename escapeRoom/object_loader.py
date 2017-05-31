@@ -1,6 +1,5 @@
-from multiprocessing import Process, Queue
 from queue import Empty
-from time import time
+from multiprocessing import Process, Queue
 
 import obj_parse as op
 import blueprints as bp
@@ -73,8 +72,7 @@ class ObjectLoader(Process):
         renBprint.texCoordNdarray = oneRenderer.textureCoordNdarray
         renBprint.normalNdarray = oneRenderer.normalNdarray
 
-        if not cls.checkRendererAab(renBprint):
-            raise ValueError
+        cls.checkRendererAab(renBprint)
 
         return renBprint
 
@@ -91,28 +89,25 @@ class ObjectLoader(Process):
             return True
 
     @staticmethod
-    def checkRendererAab(renBprint: bp.RendererBlueprint) -> bool:
+    def checkRendererAab(renBprint: bp.RendererBlueprint) -> None:
         if renBprint.name_s is None:
-            return False
+            raise ValueError
         elif renBprint.textureDir_s is None:
-            return False
+            raise ValueError
         elif renBprint.initPos_t is None:
-            return False
+            raise ValueError
         elif renBprint.textureVerNum_f is None:
-            return False
+            raise ValueError
         elif renBprint.textureHorNum_f is None:
-            return False
+            raise ValueError
         elif renBprint.shininess_f is None:
-            return False
+            raise ValueError
         elif renBprint.specularStrength_f is None:
-            return False
+            raise ValueError
 
         elif renBprint.vertexNdarray is None:
-            return False
+            raise ValueError
         elif renBprint.texCoordNdarray is None:
-            return False
+            raise ValueError
         elif renBprint.normalNdarray is None:
-            return False
-
-        else:
-            return True
+            raise ValueError

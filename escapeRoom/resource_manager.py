@@ -130,11 +130,12 @@ class ResourceManager:
                 del self._levels_l[x]
 
     def deleteAllLevels(self):
-        for x, level in enumerate(self._levels_l):
+        for x in range(len(self._levels_l) - 1, -1, -1):
+            level = self._levels_l[x]
             del self._levels_l[x]
             self._objectMan.dumpObjects( level.terminate() )
 
-        for x, level in enumerate(self._levelsWaitingObj_l):
+        for x in range(len(self._levelsWaitingObj_l) - 1, -1, -1):
             del self._levels_l[x]
 
     def deleteAnObject(self, levelName_s:str, objectName_s:str) -> bool:

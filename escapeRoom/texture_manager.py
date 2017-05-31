@@ -149,30 +149,31 @@ class TextureManager:
         if texId is None:
             raise FileNotFoundError("Failed to get texture id.")
 
-        gl.glBindTexture(gl.GL_TEXTURE_2D, texId)
-        gl.glTexStorage2D(gl.GL_TEXTURE_2D, 6, gl.GL_RGBA32F, imgData.width_i, imgData.height_i)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, texId);
+        gl.glTexStorage2D(gl.GL_TEXTURE_2D, 6, gl.GL_RGBA32F, imgData.width_i, imgData.height_i);
 
-        gl.glTexSubImage2D(gl.GL_TEXTURE_2D, 0, 0, 0, imgData.width_i, imgData.height_i, gl.GL_RGBA, gl.GL_FLOAT, imgData.ndarray)
+        gl.glTexSubImage2D(gl.GL_TEXTURE_2D, 0, 0, 0, imgData.width_i, imgData.height_i, gl.GL_RGBA, gl.GL_FLOAT, imgData.ndarray);
 
-        texSize_f = imgData.width_i*imgData.height_i*4*4/1024
+        texSize_f = imgData.width_i*imgData.height_i*4*4/1024;
 
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_BASE_LEVEL, 0)
-        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAX_LEVEL, 6)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_BASE_LEVEL, 0);
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAX_LEVEL, 6);
 
         # Alpha
         #gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_CLAMP_TO_EDGE)
         #gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_CLAMP_TO_EDGE)
 
-        gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
+        gl.glGenerateMipmap(gl.GL_TEXTURE_2D);
 
         if 1:
-            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR_MIPMAP_LINEAR)
-            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
+            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR_MIPMAP_LINEAR);
+            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR);
         else:
-            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_NEAREST_MIPMAP_NEAREST)
-            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_NEAREST)
+            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_NEAREST_MIPMAP_NEAREST);
+            gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_NEAREST);
 
-        return int(texId), float(texSize_f + texSize_f/3.0)
+        return int(texId), float(texSize_f + texSize_f/3.0);
+
 
 class Texture:
     def __init__(self, texId_i:int, texSize_f:float):

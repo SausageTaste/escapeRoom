@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict
 
 import numpy as np
 
@@ -76,6 +76,8 @@ def parseObj(fileDir_s:str) -> Dict[ str, "OneRenderer" ]:
 
     #### Make numpy array ####
 
+    del resultData_d["noname"]
+
     for objName_s in resultData_d.keys():
         localObj_d = resultData_d[objName_s]  # Dictionary that contains vertex data atm. Local variable.
 
@@ -142,7 +144,7 @@ class OneRenderer:
         self.mtl_s = None
 
     def __repr__(self):
-        return "< {}.OneMaterial object at 0x{:0>16X}, name: {}, vertexNumber: {}, mtl: {} >".format(
+        return "< {}.OneRenderer object at 0x{:0>16X}, name: {}, vertexNumber: {}, mtl: {} >".format(
             __name__, id(self), self.name_s, self.vertexNumber_i, self.mtl_s
         )
 
@@ -156,7 +158,7 @@ class OneRenderer:
         elif self.normalNdarray is None:
             raise ValueError("normalNdarray is not filled.")
         elif self.mtl_s is None:
-            raise ValueError("mtl_s is not filled.")
+            raise ValueError("mtl_s is not filled: {}".format(self.name_s))
 
 
 class OneMaterial:
@@ -177,11 +179,17 @@ class OneMaterial:
 
 
 def main():
-    a = parseObj("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\asdf\\vv.obj")
-    b = parseMtl("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\asdf\\vv.mtl")
+    a = parseObj("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\palanquin.obj")
+    b = parseMtl("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\palanquin.mtl")
 
     print(a)
     print(b)
+
+    for x in a:
+        print(a[x])
+
+    for x in b:
+        print(b[x])
 
 
 if __name__ == '__main__':

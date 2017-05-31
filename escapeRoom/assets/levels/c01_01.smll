@@ -212,18 +212,39 @@ object::define
 object::objstatic
 {
     name(seoul);
-    initpos(0, 2, 0);
+    initpos(0, 1, 0);
     static(false);
-    objname(vv);
+    objname(seoul_v2);
 
     collider::aabb
     {
         name(seoul_col);
         initPos(0, 0, 0);
         type(blocking);
-        minPos(-1, 0, -1); maxPos(1,2,1);
+        minPos(-0.1, 0, -0.1); maxPos(0.1,2,0.1);
         weight(0);
         static(false);
         activateOption(toggle);
     }
 }
+
+/*
+object::objstatic
+{
+    name(vv);
+    initpos(0, 0, 0);
+    static(false);
+    objname(vv);
+
+    collider::aabb
+    {
+        name(vv_col);
+        initPos(0, 0, 0);
+        type(blocking);
+        minPos(-0.1, 0, -0.1); maxPos(0.1,2,0.1);
+        weight(0);
+        static(false);
+        activateOption(toggle);
+    }
+}
+*/

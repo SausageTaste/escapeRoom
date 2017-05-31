@@ -176,27 +176,27 @@ class Renderer(ActorGeneral):
         )
 
     def render(self, parent:Actor, uniLoc:UniformLocs) -> None:
-        gl.glBindVertexArray(self.vao_i)
+        gl.glBindVertexArray(self.vao_i);
 
-        gl.glActiveTexture(gl.GL_TEXTURE0)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, self.diffuseMap_i)
+        gl.glActiveTexture(gl.GL_TEXTURE0);
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.diffuseMap_i);
 
-        gl.glUniformMatrix4fv(uniLoc.modelMatrix, 1, gl.GL_FALSE, self.getModelMatrix(parent))
+        gl.glUniformMatrix4fv(uniLoc.modelMatrix, 1, gl.GL_FALSE, self.getModelMatrix(parent));
 
-        gl.glUniform1f(uniLoc.textureVerNum_f, self.textureVerNum_f)
-        gl.glUniform1f(uniLoc.textureHorNum_f, self.textureHorNum_f)
+        gl.glUniform1f(uniLoc.textureVerNum_f, self.textureVerNum_f);
+        gl.glUniform1f(uniLoc.textureHorNum_f, self.textureHorNum_f);
 
-        gl.glUniform1f(uniLoc.shininess, self.shininess_f)
-        gl.glUniform1f(uniLoc.specularStrength, self.specularStrength_f)
+        gl.glUniform1f(uniLoc.shininess, self.shininess_f);
+        gl.glUniform1f(uniLoc.specularStrength, self.specularStrength_f);
 
-        gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.vertexSize_i)
+        gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.vertexSize_i);
 
     def renderShadow(self, parent:Actor, uniLocShadow:UniformLocsShadow) -> None:
-        gl.glBindVertexArray(self.vao_i)
+        gl.glBindVertexArray(self.vao_i);
 
-        gl.glUniformMatrix4fv(uniLocShadow.modelMat, 1, gl.GL_FALSE, self.getModelMatrix(parent))
+        gl.glUniformMatrix4fv(uniLocShadow.modelMat, 1, gl.GL_FALSE, self.getModelMatrix(parent));
 
-        gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.vertexSize_i)
+        gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.vertexSize_i);
 
     def terminate(self) -> Tuple[int, int, int, int, int]:
         del self.staticLights_l

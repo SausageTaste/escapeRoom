@@ -21,11 +21,15 @@ out vec3 fragPos;
 out vec4 fragPosFlashLightSpace;
 
 
+
+
+
+
 void main(void)
 {
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
     texCoordOut = vec2(texCoord.x * textureHorNum_f, texCoord.y * textureVerNum_f);
-    normalVec = normalize(vec3(modelMatrix * vec4(normal, 0.0)));
+    normalVec = normalize(vec3(modelMatrix * vec4(normal,   0.0)));
     fragPos = vec3(modelMatrix * vec4(position, 1.0));
     fragPosFlashLightSpace = flashLightSpaceMatrix * vec4(fragPos, 1.0);
 }

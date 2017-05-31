@@ -367,9 +367,9 @@ def __timeIt():
     print(tm2)
 
 def __main():
-    a = Angle(350)
-    b = Angle(300)
-    print(b - a)
+    a = Angle(283)
+
+    print(a)
 
 if __name__ == '__main__':
     __main()

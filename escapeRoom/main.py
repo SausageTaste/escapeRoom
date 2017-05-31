@@ -313,6 +313,7 @@ class Commander:
             "win_settings":         self.win_settings,
 
             "level_del":            self.level_del,
+            "level_del_all":        self.level_del_all,
             "level_load":           self.level_load,
 
             "obj_set_pos":          self.obj_setpos,
@@ -379,9 +380,16 @@ class Commander:
     def __notImplemented(self, command_l:list):
         self.mainLoop.console.appendLogs( "Not implemented command: '{}'".format(command_l[0]) )
 
-    # Commands
+    ######## Commands ########
 
     def help(self, command_l: list):
+        """
+        "help [arg1] [arg2] [arg3] ... [arg4444]"
+        
+        인자로 주어진 문자열들과 가장 유사한 명령어를 출력합니다.
+        명령어가 구체적으로 어떤 문자열인지 기억이 잘 안 날 때 사용하시면 됩니다.
+        예) "help flash shadow" -> "conf_flash_shadow"
+        """
         if len(command_l) == 1:
             self.mainLoop.console.appendLogs(
                 "This command finds a valid command that is similar to following string."
@@ -394,10 +402,20 @@ class Commander:
                 self.mainLoop.console.appendLogs("Maybe you were looking for: '{}'".format(result))
 
     def sys_exit(self, _:list):
+        """
+        "sys_exit"
+        
+        사용 중인 자원을 모두 반환하고 멀티프로세스들을 모두 종료한 뒤 프로그램을 완전히 종료합니다.
+        """
         self.mainLoop.terminate()
         sys.exit(0)
 
     def sys_start_new_game(self, _:list):
+        """
+        "sys_start_new_game"
+        
+        메뉴 화면에서 '처음부터 시작' 버튼을 누르는 것과 동일한 일을 합니다.
+        """
         self.ui_set_blinder([None, 1.0])
         self.sys_freeze([None, 1])
 
@@ -413,30 +431,78 @@ class Commander:
         self.mainLoop.resourceManager.overlayUiMan.menuTexts.renderResumeGame_b = True
 
     def sys_freeze(self, command_l:list):
+        """
+        "sys_freeze (0 or 1: int)"
+        
+        인자로 0 외의 숫자가 주어지면 사용자의 조작을 막으며 0이 주어지면 풀립니다.
+        """
         if int(command_l[1]):
             self.mainLoop.globalStates.freezeLogic_b = True
         else:
             self.mainLoop.globalStates.freezeLogic_b = False
 
     def win_load_game(self, command_l:list):
+        """
+        "win_load_game"
+        
+        로딩은 아직 구현되지 않았습니다.
+        """
         self.__notImplemented(command_l)
 
     def win_settings(self, command_l:list):
+        """
+        "win_settings"
+        
+        설정창을 아직 구현되지 않았습니다.
+        """
         self.__notImplemented(command_l)
 
     def level_del(self, command_l:list):
+        """
+        "level_del (level name)"
+        
+        인자로 주어진 이름을 갖고 있는 레벨을 삭제합니다.
+        레벨은 오브젝트들을 포함하는 상위 객체이며, 이것이 지워지면 포함된 오브젝트들도 모두 지워집니다.
+        
+        예) "level_del c01_02" -> 긴 통로를 삭제합니다.
+        """
         self.mainLoop.resourceManager.deleteLevel(command_l[1])
 
     def level_del_all(self, _:list):
+        """
+        "level_del_all"
+        
+        모든 레벨을 삭제합니다.
+        이 명령어를 쓰고 싶은 마음이 전혀 안 들어야 정상입니다.
+        삐빅! 비정상입니다.
+        """
         self.mainLoop.resourceManager.deleteAllLevels()
 
     def level_load(self, command_l:list):
+        """
+        "level_load (level name)"
+        
+        인자로 주어진 이름을 가진 레벨 파일을 불러 옵니다.
+        레벨 파일들은 escapeRoom\\assets\\levels 폴더 안에 있습니다.
+        인자로 이름을 줄 때, 확장자 .smll은 떼야 합니다.
+        
+        예) "level_load entry" -> 초기 시작 화면에 배경으로 등장하는 긴 통로 레벨을 불러옵니다.
+        """
         try:
             self.mainLoop.resourceManager.requestLevelLoad(command_l[1])
         except FileNotFoundError:
             self.mainLoop.console.appendLogs("Level not found: '{}'".format(command_l[1]))
 
     def obj_setpos(self, command_l:list):
+        """
+        "obj_set_pos (level name) (object instance name) (x pos: float) (y pos: float) (z pos: float)"
+        함수명과 명령어가 같이 않으므로 주의!
+        
+        (level name)이라는 이름을 가진 레벨 안의 (object instance name)라는 이름을 가진 오브젝트를
+        (x pos: float) (y pos: float) (z pos: float) 위치로 이동합니다.
+        
+        예) "obj_set_pos c01_01 seoul -20 1 0" -> 서울 오브젝트를 옆 통로로 옮깁니다.
+        """
         obj = self.mainLoop.resourceManager.findObjectInLevelByName(command_l[1], command_l[2])
         if obj is None:
             self.mainLoop.console.appendLogs(
@@ -460,6 +526,14 @@ class Commander:
                 )
 
     def obj_set_scale(self, command_l:list):
+        """
+        "obj_set_scale (level name) (object instance name) (x scale: float) (y scale: float) (z scale: float)"
+        
+        obj_set_pos와 사용법은 비슷합니다.
+        다만 이 명령어는 크기를 조절합니다.
+        
+        예) "obj_set_scale c01_01 seoul 0.5 3 0.5" -> 서울 오브젝트를 좁고 두껍게 만듧니다. 케잌 먹고 싶어지는 부분.
+        """
         obj = self.mainLoop.resourceManager.findObjectInLevelByName(command_l[1], command_l[2])
         if obj is None:
             self.mainLoop.console.appendLogs(
@@ -481,38 +555,113 @@ class Commander:
                 )
 
     def obj_del(self, command_l:list):
+        """
+        "obj_del (level name) (object instance name)"
+        
+        (level name) 레벨 안에 있는 (object instance name) 오브젝트를 삭제합니다.
+        만약 마지막 남은 인스턴스인 경우 해당 오브젝트의 메쉬는 메모리에서 반환됩니다.
+        
+        "obj_del c01_01 seoul" -> 서울 오브젝트를 제거하고 메모리를 반환합니다.
+        """
         self.mainLoop.resourceManager.deleteAnObject(command_l[1], command_l[2])
 
     def conf_flash_shadow(self, command_l:list):
+        """
+        "conf_flash_shadow (0 or 1: int)"
+        
+        손전등의 그림자를 켜고 끌 수 있습니다.
+        제 발적화 덕분에 손전등 그림자가 fps를 많이 잡아먹기 때문에 끌 수 있도록 만들었습니다.
+        
+        "conf_flash_shadow 0" -> 손전등의 그림자를 끄고 fps를 개선합니다.
+        """
         self.mainLoop.configs.drawFlashLightShadow_b = bool(int(command_l[1]))
 
     def ui_showfps(self, command_l:list):
+        """
+        "ui_show_fps (0 or 1: int)"
+        메소드명과 명령어 이름이 다르므로 주의!
+
+        화면 좌측 상단에 표시되는 fps 표시기를 켜고 끌 수 있습니다.
+
+        "ui_show_fps 0" -> fps 표시기를 끕니다.
+        """
         self.mainLoop.globalStates.showFps_b = bool(int(command_l[1]))
 
     def ui_set_blinder(self, command_l:list):
+        """
+        "ui_set_blinder (0 or 1: int)"
+        
+        화면 전체를 검은 색으로 칠합니다.
+        쓰지 마세요. 콘솔창도 가려버립니다.
+        이 명령어는 화면 전환 등에 쓰이기 위해 만들어졌습니다.
+        
+        "ui_set_blinder 1" -> 화면 전체를 검은색으로 덮습니다.
+        """
         self.mainLoop.resourceManager.overlayUiMan.blinder.setBaseMask(command_l[1])
 
     def print_res(self, _:list):
+        """
+        "print_res"
+        
+        콘솔에 프로그램의 현재 해상도를 출력합니다.
+        """
         self.mainLoop.console.appendLogs(
             "width: {}, height: {}".format(self.mainLoop.globalStates.winWidth_i,
                                            self.mainLoop.globalStates.winHeight_i)
         )
 
     def gr_set_ambient(self, command_l:list):
+        """
+        "gr_set_ambient (r value: float) (g value: float) (b value: float)"
+        
+        엠비언트 색상 RGB를 설정합니다.
+        엠비언트 색상은 물체가 아무런 빛을 받지 않았을 경우 기본적으로 받는 빛의 색깔입니다.
+        기본값은 0.0, 0.0, 0.0으로, 빛을 전혀 받지 않으면 전혀 보이지 않습니다.
+        1.0, 1.0, 1.0으로 설정된 경우 빛을 전혀 받지 않은 물체의 밝기는 텍스처 이미지의 밝기와 완전히 동일해집니다.
+        
+        예) "gr_set_ambient 0.2 0.2 0.2" -> 전체적인 밝기를 약간 높입니다.
+        """
         self.mainLoop.renderDude.globalEnv.setAmbient(float(command_l[1]), float(command_l[2]), float(command_l[3]))
 
     def gr_get_ambient(self, _:list):
+        """
+        "gr_get_ambient"
+        
+        현재 엠비언트 색상을 콘솔에 출력합니다.
+        """
         self.mainLoop.console.appendLogs("Ambient: {}, {}, {}".format(*self.mainLoop.renderDude.globalEnv.getAmbient()))
 
     def pl_set_pos(self, command_l:list):
+        """
+        "pl_set_pos (x pos: float) (y pos: float) (z pos: float)"
+        
+        플레이어의 위치를 설정합니다.
+        레벨 밖으로 떨어진 경우 위치를 0 0 0으로 설정해 주시면 원래 자리로 돌아올 수 있습니다.
+        
+        "pl_set_pos 0 0 0" -> 월드의 중심으로 텔레포트 합니다.
+        """
         self.mainLoop.player.setPosX( command_l[1] )
         self.mainLoop.player.setPosY( command_l[2] )
         self.mainLoop.player.setPosZ( command_l[3] )
 
     def pl_get_pos(self, _:list):
+        """
+        "pl_get_pos"
+        
+        플레이어의 현재 위치의 좌표를 인게임 콘솔에 출력합니다.
+        """
         self.mainLoop.console.appendLogs("Player position: {:f}, {:f}, {:f}".format(*self.mainLoop.player.getPosXYZ()))
 
     def pl_set_degree(self, command_l:list):
+        """
+        "pl_set_degree (x degree: float) (y degree: float) (z degree: float)
+        
+        플레이어가 보는 방향을 설정합니다.
+        인자는 degree 형식으로, 즉 360도 표현 방식으로 넣습니다.
+        x, y, z는 회전축을 의미합니다.
+        
+        "pl_set_degree 0.0 180.0 0.0" -> 남쪽을 바라봅니다.
+        """
         xAngle, yAngle, zAngle = self.mainLoop.player.getAngleXYZ()
 
         try:
@@ -523,12 +672,25 @@ class Commander:
             traceback.print_exc()
 
     def pl_get_degree(self, _:list):
+        """
+        "pl_get_degree"
+        
+        플레이어가 보는 방향을 degree 형식으로 인게임 콘솔에 출력합니다.
+        """
         xAngle, yAngle, zAngle = self.mainLoop.player.getAngleXYZ()
         self.mainLoop.console.appendLogs("Player looking degree: {}, {}, {}".format(
             xAngle.getDegree(), yAngle.getDegree(), zAngle.getDegree()
         ))
 
     def pl_toggle_flashlight(self, command_l: list):
+        """
+        "pl_toggle_flashlight (0 or 1: int)"
+        
+        손전등을 켜고 끕니다.
+        F키를 쓰는 게 훨씬 편합니다.
+        
+        예) "pl_toggle_flashlight 0" -> 손전등을 끕니다.
+        """
         if int(command_l[1]):
             self.mainLoop.player.flashLightOn_b = True
         else:

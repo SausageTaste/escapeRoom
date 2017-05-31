@@ -146,62 +146,62 @@ class ObjectManager:
             self.giveObjectDefineBlueprint(objBprint)
 
     def __makeRendererFromBprint(self, renBprint:RendererBlueprint) -> ds.Renderer:
-        newRenderer = ds.Renderer(renBprint.name_s, renBprint.initPos_t, renBprint.static_b)
-        vramUsage_i = 0
+        newRenderer = ds.Renderer(renBprint.name_s, renBprint.initPos_t, renBprint.static_b);
+        vramUsage_i = 0;
 
         ######## VAO ########
 
-        newRenderer.vao_i = self.bufferManager.requestVertexArray()
-        gl.glBindVertexArray(newRenderer.vao_i)
+        newRenderer.vao_i = self.bufferManager.requestVertexArray();
+        gl.glBindVertexArray(newRenderer.vao_i);
 
         ######## Vertex buffer ########
 
-        size = renBprint.vertexNdarray.size * renBprint.vertexNdarray.itemsize
-        newRenderer.vertexSize_i = renBprint.vertexNdarray.size // 3
-        vramUsage_i += size
+        size = renBprint.vertexNdarray.size * renBprint.vertexNdarray.itemsize;
+        newRenderer.vertexSize_i = renBprint.vertexNdarray.size // 3;
+        vramUsage_i += size;
 
-        newRenderer.vertexArrayBuffer_i = self.bufferManager.requestBuffer()
-        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.vertexArrayBuffer_i)
-        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.vertexNdarray, gl.GL_STATIC_DRAW)
+        newRenderer.vertexArrayBuffer_i = self.bufferManager.requestBuffer();
+        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.vertexArrayBuffer_i);
+        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.vertexNdarray, gl.GL_STATIC_DRAW);
 
         gl.glVertexAttribPointer(0, 3, gl.GL_FLOAT, gl.GL_FALSE, 0, None)
-        gl.glEnableVertexAttribArray(0)
+        gl.glEnableVertexAttribArray(0);
 
         ######## Texture coord buffer ########
 
-        size = renBprint.texCoordNdarray.size * renBprint.texCoordNdarray.itemsize
-        vramUsage_i += size
+        size = renBprint.texCoordNdarray.size * renBprint.texCoordNdarray.itemsize;
+        vramUsage_i += size;
 
-        newRenderer.textureArrayBuffer_i = self.bufferManager.requestBuffer()
-        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.textureArrayBuffer_i)  # Bind the buffer.
-        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.texCoordNdarray, gl.GL_STATIC_DRAW)  # Allocate memory.
+        newRenderer.textureArrayBuffer_i = self.bufferManager.requestBuffer();
+        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.textureArrayBuffer_i);  # Bind the buffer.
+        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.texCoordNdarray, gl.GL_STATIC_DRAW);  # Allocate memory.
 
-        gl.glVertexAttribPointer(1, 2, gl.GL_FLOAT, gl.GL_FALSE, 0, None)  # Defines vertex attributes. What are those?
-        gl.glEnableVertexAttribArray(1)
-
-        ########  ########
-
-        size = renBprint.normalNdarray.size * renBprint.normalNdarray.itemsize
-        vramUsage_i += size
-
-        newRenderer.normalArrayBuffe_i = self.bufferManager.requestBuffer()
-        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.normalArrayBuffe_i)  # Bind the buffer.
-        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.normalNdarray, gl.GL_STATIC_DRAW)  # Allocate memory.
-
-        gl.glVertexAttribPointer(2, 3, gl.GL_FLOAT, gl.GL_FALSE, 0, None)  # Defines vertex attributes. What are those?
-        gl.glEnableVertexAttribArray(2)
+        gl.glVertexAttribPointer(1, 2, gl.GL_FLOAT, gl.GL_FALSE, 0, None);  # Defines vertex attributes. What are those?
+        gl.glEnableVertexAttribArray(1);
 
         ########  ########
 
-        newRenderer.diffuseMapName_s = renBprint.textureDir_s
+        size = renBprint.normalNdarray.size * renBprint.normalNdarray.itemsize;
+        vramUsage_i += size;
 
-        newRenderer.textureVerNum_f = renBprint.textureVerNum_f
-        newRenderer.textureHorNum_f = renBprint.textureHorNum_f
-        newRenderer.shininess_f = renBprint.shininess_f
-        newRenderer.specularStrength_f = renBprint.specularStrength_f
-        newRenderer.vramUsage_i = vramUsage_i
+        newRenderer.normalArrayBuffe_i = self.bufferManager.requestBuffer();
+        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, newRenderer.normalArrayBuffe_i);  # Bind the buffer.
+        gl.glBufferData(gl.GL_ARRAY_BUFFER, size, renBprint.normalNdarray, gl.GL_STATIC_DRAW);  # Allocate memory.
 
-        return newRenderer
+        gl.glVertexAttribPointer(2, 3, gl.GL_FLOAT, gl.GL_FALSE, 0, None);  # Defines vertex attributes. What are those?
+        gl.glEnableVertexAttribArray(2);
+
+        ########  ########
+
+        newRenderer.diffuseMapName_s = renBprint.textureDir_s;
+
+        newRenderer.textureVerNum_f = renBprint.textureVerNum_f;
+        newRenderer.textureHorNum_f = renBprint.textureHorNum_f;
+        newRenderer.shininess_f = renBprint.shininess_f;
+        newRenderer.specularStrength_f = renBprint.specularStrength_f;
+        newRenderer.vramUsage_i = vramUsage_i;
+
+        return newRenderer;
 
     @staticmethod
     def __findObjMtlDir(objFileName_s:str) -> Optional[ Tuple[str, str] ]:
