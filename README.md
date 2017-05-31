@@ -1,4 +1,5 @@
 # escapeRoom
+![Overview](/screenshots/001.jpg)
 본격적인 게임 개발을 위해 C++ 공부를 시작하였으므로 이 프로젝트는 중지되었습니다.
 
 ## 제작 환경
