@@ -318,7 +318,7 @@ class Commander:
 
             "obj_set_pos":          self.obj_setpos,
             "obj_del":              self.obj_del,
-            "obj_set_scale":              self.obj_set_scale,
+            "obj_set_scale":        self.obj_set_scale,
 
             "conf_flash_shadow":    self.conf_flash_shadow,
 
@@ -388,7 +388,8 @@ class Commander:
         
         인자로 주어진 문자열들과 가장 유사한 명령어를 출력합니다.
         명령어가 구체적으로 어떤 문자열인지 기억이 잘 안 날 때 사용하시면 됩니다.
-        예) "help flash shadow" -> "conf_flash_shadow"
+        
+        예) "help flash shadow" -> 인게임 콘솔에 "conf_flash_shadow" 출력.
         """
         if len(command_l) == 1:
             self.mainLoop.console.appendLogs(
@@ -603,7 +604,7 @@ class Commander:
         """
         "print_res"
         
-        콘솔에 프로그램의 현재 해상도를 출력합니다.
+        인게임 콘솔에 프로그램의 현재 해상도를 출력합니다.
         """
         self.mainLoop.console.appendLogs(
             "width: {}, height: {}".format(self.mainLoop.globalStates.winWidth_i,
@@ -627,7 +628,7 @@ class Commander:
         """
         "gr_get_ambient"
         
-        현재 엠비언트 색상을 콘솔에 출력합니다.
+        현재 엠비언트 색상을 인게임 콘솔에 출력합니다.
         """
         self.mainLoop.console.appendLogs("Ambient: {}, {}, {}".format(*self.mainLoop.renderDude.globalEnv.getAmbient()))
 
