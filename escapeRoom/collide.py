@@ -2,7 +2,7 @@ from typing import Tuple, Optional, Union, List
 
 import mmath as mm
 from actor import Actor, ActorGeneral
-import myclib as c
+#import myclib as c
 
 
 ######## Interface ########
@@ -15,7 +15,7 @@ def checkCollision(fromCol:Union["Aabb"], fromColParent:Optional[Actor], toCol:U
 
 def getDistaceToPushBack(fromCol:Union["Aabb"], fromColParent:Optional[Actor], toCol:Union["Aabb"], toColParant:Optional[Actor]) -> Tuple[float, float, float, float, float, float]:
     if isinstance(fromCol, Aabb) and isinstance(toCol, Aabb):
-        return getDistanceToPushBackAabbAabb_C(fromCol, fromColParent, toCol, toColParant)
+        return getDistanceToPushBackAabbAabb(fromCol, fromColParent, toCol, toColParant)
     else:
         raise ValueError( "Not supported types: {}, {}".format( type(fromCol), type(toCol) ) )
 
