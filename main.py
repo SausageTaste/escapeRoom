@@ -804,8 +804,6 @@ def main():
     except:
         print('\nSERIOUS ERROR during initializing!!')
         traceback.print_exc()
-        sleep(1)
-        input("Press any key to continue...")
         sys.exit(-1)
     else:
         try:
@@ -817,8 +815,6 @@ def main():
             mainLoop.terminate()
             print('\nSERIOUS ERROR during run time!!')
             traceback.print_exc()
-            sleep(1)
-            input("Press any key to continue...")
             sys.exit(-1)
 
 
