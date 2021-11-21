@@ -801,12 +801,10 @@ class MainLoop:
 def main():
     try:
         mainLoop = MainLoop()
+        mainLoop.onResize()
     except:
         print('\nSERIOUS ERROR during initializing!!')
-        traceback.print_exc()
-        sleep(1)
-        input("Press any key to continue...")
-        sys.exit(-1)
+        raise
     else:
         try:
             mainLoop.run()
@@ -815,11 +813,7 @@ def main():
             sys.exit(0)
         except:  # I want to see what exception crashed my god damn app.
             mainLoop.terminate()
-            print('\nSERIOUS ERROR during run time!!')
-            traceback.print_exc()
-            sleep(1)
-            input("Press any key to continue...")
-            sys.exit(-1)
+            raise
 
 
 if __name__ == '__main__':
