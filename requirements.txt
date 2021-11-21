@@ -1,0 +1,4 @@
+pillow
+numpy
+pygame
+pyopengl
