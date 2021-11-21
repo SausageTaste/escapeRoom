@@ -13,6 +13,9 @@ from language import UiTexts
 
 
 def getTextMaskMapId(text_s:str, textSize_i:int) -> Tuple[int, float, int, int]:
+    if not text_s:
+        text_s = " "
+
     font = p.font.Font(const.DEFAULT_FONT_DIR_s, textSize_i)
     textSurface = font.render(text_s, True, (255, 255, 255, 255), (0, 0, 0, 255))
     image_bytes = p.image.tostring(textSurface, "RGBA", True)
