@@ -1,3 +1,4 @@
+import sys
 from typing import Tuple, Optional
 
 import pygame as p
@@ -124,14 +125,19 @@ class OverlayImage:
         self.__baseMask_f = float(baseMask_f)
 
     def __del__(self):
-        try:
-            gl.glDeleteTextures( self.__maskMap_i )
-        except gl.error.GLerror:
-            pass
+        self.__deleteTexture(self.__maskMap_i)
+        self.__deleteTexture(self.__diffuseMap_i)
+
+    @staticmethod
+    def __deleteTexture(texId_i:Optional[int]) -> None:
+        if texId_i is None:
+            return
+        if sys.meta_path is None:
+            return
 
         try:
-            gl.glDeleteTextures( self.__diffuseMap_i )
-        except gl.error.GLerror:
+            gl.glDeleteTextures(1, (texId_i,))
+        except Exception:
             pass
 
     def render(self, uniLoc:UniformLocsOverlay) -> None:
@@ -170,7 +176,7 @@ class OverlayImage:
             raise ValueError
 
     def setMaskMap(self, maskMapId_i:int) -> None:
-        gl.glDeleteTextures( self.__maskMap_i )
+        self.__deleteTexture(self.__maskMap_i)
 
         self.__maskMap_i = maskMapId_i
 

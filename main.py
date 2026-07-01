@@ -714,6 +714,11 @@ class MainLoop:
             self.globalStates.winHeight_i = self.configs.initScreenSizeHeight_i
 
             p.init()
+            p.display.gl_set_attribute(pl.GL_CONTEXT_MAJOR_VERSION, 3)
+            p.display.gl_set_attribute(pl.GL_CONTEXT_MINOR_VERSION, 3)
+            p.display.gl_set_attribute(pl.GL_CONTEXT_PROFILE_MASK, pl.GL_CONTEXT_PROFILE_CORE)
+            p.display.gl_set_attribute(pl.GL_CONTEXT_FLAGS, pl.GL_CONTEXT_FORWARD_COMPATIBLE_FLAG)
+
             winSize_t = ( self.globalStates.winWidth_i, self.globalStates.winHeight_i )
             if self.configs.fullScreen_b:
                 p.display.set_mode(winSize_t, pl.DOUBLEBUF | pl.OPENGL | pl.FULLSCREEN)
