@@ -166,9 +166,9 @@ class ResourceManager:
 
     @staticmethod
     def __findLevelDir(levelName_s:str) -> str:
-        for x_s in os.listdir(".\\assets\\levels\\"):
+        for x_s in os.listdir("./assets/levels/"):
             if levelName_s == x_s:
-                return ".\\assets\\levels\\" + x_s
+                return "./assets/levels/" + x_s
         else:
             raise FileNotFoundError(levelName_s)
 

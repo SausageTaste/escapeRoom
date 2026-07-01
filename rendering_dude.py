@@ -17,7 +17,7 @@ class RenderingDude:
         self.resourceMan = resourceManager
         self.camera = camera
         self.configs = configs
-        
+
         self.globalEnv = GlobalEmvironment()
 
         self.__program = self.getProgram()
@@ -80,7 +80,7 @@ class RenderingDude:
     @staticmethod
     def getProgram() -> int:
         vertexShader = gl.glCreateShader(gl.GL_VERTEX_SHADER)
-        with open("glsl\\renderer_vs.glsl") as file:
+        with open("glsl/renderer_vs.glsl") as file:
             gl.glShaderSource(vertexShader, file.read())
         gl.glCompileShader(vertexShader)
         log_s = gl.glGetShaderInfoLog(vertexShader)
@@ -88,7 +88,7 @@ class RenderingDude:
             raise TypeError(log_s)
 
         fragmentShader = gl.glCreateShader(gl.GL_FRAGMENT_SHADER)
-        with open("glsl\\renderer_fs.glsl") as file:
+        with open("glsl/renderer_fs.glsl") as file:
             gl.glShaderSource(fragmentShader, file.read())
         gl.glCompileShader(fragmentShader)
         log_s = gl.glGetShaderInfoLog(fragmentShader)
@@ -110,7 +110,7 @@ class RenderingDude:
     @staticmethod
     def getProgramForShadow() -> int:
         vertexShader = gl.glCreateShader(gl.GL_VERTEX_SHADER)
-        with open("glsl\\shadow_vs.glsl") as file:
+        with open("glsl/shadow_vs.glsl") as file:
             gl.glShaderSource(vertexShader, file.read())
         gl.glCompileShader(vertexShader)
         log_s = gl.glGetShaderInfoLog(vertexShader)
@@ -118,7 +118,7 @@ class RenderingDude:
             raise TypeError(log_s)
 
         fragmentShader = gl.glCreateShader(gl.GL_FRAGMENT_SHADER)
-        with open("glsl\\shadow_fs.glsl") as file:
+        with open("glsl/shadow_fs.glsl") as file:
             gl.glShaderSource(fragmentShader, file.read())
         gl.glCompileShader(fragmentShader)
         log_s = gl.glGetShaderInfoLog(fragmentShader)

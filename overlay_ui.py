@@ -61,7 +61,7 @@ class OverlayUiManager:
 
         self.uiTexts = UiTexts()
 
-        self.__program_i = of.getProgram(".\\glsl\\overlay_vs.glsl", ".\\glsl\\overlay_fs.glsl")
+        self.__program_i = of.getProgram("./glsl/overlay_vs.glsl", "./glsl/overlay_fs.glsl")
         self.__uniloc = UniformLocsOverlay(self.__program_i)
 
         self.consoleWin = ConsoleWindow(self)

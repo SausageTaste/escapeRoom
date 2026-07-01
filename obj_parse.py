@@ -179,8 +179,8 @@ class OneMaterial:
 
 
 def main():
-    a = parseObj("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\palanquin.obj")
-    b = parseMtl("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\\models\\palanquin.mtl")
+    a = parseObj("C:/Users/sungmin/OneDrive/Programming/Python/3.5/escapeRoom/assets/models/palanquin.obj")
+    b = parseMtl("C:/Users/sungmin/OneDrive/Programming/Python/3.5/escapeRoom/assets/models/palanquin.mtl")
 
     print(a)
     print(b)

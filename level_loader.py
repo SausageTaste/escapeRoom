@@ -102,7 +102,7 @@ class SmllCompiler:
         self.__print_b = bool(print_b)
 
     def compile(self) -> ds.Level:
-        headCut_i = self.__fileDir_s.rindex('\\') + 1
+        headCut_i = self.__fileDir_s.rindex('/') + 1
         tailCut_i = self.__fileDir_s.index('.', headCut_i)
         fileName_s = self.__fileDir_s[headCut_i:tailCut_i]
         with open(self.__fileDir_s) as file:
@@ -355,7 +355,7 @@ class SmllCompiler:
         tokenFunctions_d = {
             "renderer::aab": cls.takeRendererAabBlock,
             "renderer::quad": cls.takeRendererQuadBlock,
-            
+
             'collider::aabb': cls.takeColliderAabbBlock,
         }
 
@@ -1540,7 +1540,7 @@ class SmllCompiler:
 
 
 def main():
-    levelParser = SmllCompiler("C:\\Users\\sungmin\\OneDrive\\Programming\\Python\\3.5\\escapeRoom\\assets\levels\\entry.smll")
+    levelParser = SmllCompiler("C:/Users/sungmin/OneDrive/Programming/Python/3.5/escapeRoom/assets\levels/entry.smll")
     level = levelParser.compile()
 
 

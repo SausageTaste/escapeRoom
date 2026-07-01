@@ -217,13 +217,13 @@ class ObjectManager:
                     if objFileDir_s:
                         raise FileExistsError("There are multiple '{}' files.".format(objFileName_s))
                     else:
-                        objFileDir_s = "{}\\{}".format(folderDir_s, file_s)
+                        objFileDir_s = "{}/{}".format(folderDir_s, file_s)
                         continue
                 elif file_s == objFileName_s + ".mtl":
                     if mtlFileDir_s:
                         raise FileExistsError("There are multiple '{}' files.".format(mtlFileDir_s))
                     else:
-                        mtlFileDir_s = "{}\\{}".format(folderDir_s, file_s)
+                        mtlFileDir_s = "{}/{}".format(folderDir_s, file_s)
                         continue
 
         if objFileDir_s and mtlFileDir_s:
