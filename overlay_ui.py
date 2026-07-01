@@ -64,6 +64,7 @@ class OverlayUiManager:
 
         self.__program_i = of.getProgram("./glsl/overlay_vs.glsl", "./glsl/overlay_fs.glsl")
         self.__uniloc = UniformLocsOverlay(self.__program_i)
+        self.__vao_i = int(gl.glGenVertexArrays(1))
 
         self.consoleWin = ConsoleWindow(self)
         self.darkEffect = OverlayImage( (-1, 1, 1, -1), 1, self.winSize_t, None, None, (0, 0, 0), 0.5 )
@@ -75,6 +76,7 @@ class OverlayUiManager:
 
     def render(self) -> None:
         gl.glUseProgram(self.__program_i)
+        gl.glBindVertexArray(self.__vao_i)
 
         gl.glUniform1i(self.__uniloc.diffuseMap, 0)
         gl.glUniform1i(self.__uniloc.maskMap, 1)
